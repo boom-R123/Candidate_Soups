@@ -315,6 +315,8 @@ class Glat(FairseqNATModel):
 
         if num > 1 and Use_CDS:       
             if reranker is not None:
+                encoder_input[0] = encoder_input[0][:, 1:]   #AT的输入的起始位置没有 0 token
+                encoder_input[1] = encoder_input[1] - 1
                 reranker_encoder_out = reranker.encoder(*encoder_input)
                 output_tokens[:, 0] = self.eos 
                 length_beam_order = (
